@@ -1,0 +1,128 @@
+.mainHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    overflow: hidden;
+
+    >div{
+        display: flex;
+        align-items: center;
+
+        >h2{
+               margin-left: 20px;
+               white-space: nowrap;
+               color: #ea3970;
+               margin-bottom: 18px;
+
+               @media screen and (max-width: 640px) {
+                    display: none;
+                }
+             }
+        
+        
+    }
+    
+
+}
+
+.iconPoop{
+    color:lightblue;
+    margin: 20px;
+    font-size: 3rem;
+}
+
+.headerMenu{
+    //margin-left: 25%;
+    color: #B3C0CB;
+    display: flex;
+    @media screen and (max-width: 640px) {
+        margin-left: 5%;
+    }
+    
+
+    span{
+        font-weight: 900;
+        font-size: 16px;
+        cursor: pointer;
+
+        @media screen and (max-width: 640px) {
+            font-size: 12px;
+        }
+    }
+
+    // div:last-child{
+    //      margin-left: 160px;
+    //      @media screen and (max-width: 640px) {
+    //          margin-left: 14px;
+    //      }
+    //}
+
+    .menu1{
+        transition: all 300ms;
+        position: absolute;
+        left:50%;
+        margin-left: -15%;
+        &:hover{
+            transform: scale(1.2);
+        }
+        @media screen and (max-width: 640px) {
+            margin-left: -30%;
+        }
+    }
+    .menu2{
+        position: absolute;
+        left:50%;
+        margin-left: 5%;
+        transition: all 300ms;
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
+    
+
+}
+
+.active{
+    color: #ea3970;
+}
+
+
+
+svg {
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+  }
+  
+#icon-fan .wing {
+-webkit-animation: wing 0.4s linear infinite both;
+        animation: wing 0.4s linear infinite both;
+-webkit-transform-origin: center 38%;
+        transform-origin: center 38%;
+}
+
+@-webkit-keyframes wing {
+0% {
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
+
+@keyframes wing {
+0% {
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
