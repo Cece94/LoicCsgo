@@ -1,11 +1,14 @@
 import React, {useState} from "react";
 import './teamCreation.scss';
-import { Form, Field } from 'react-final-form'
+import { Form, Field, withTypes } from 'react-final-form'
 import {Button, Divider} from 'semantic-ui-react'
 
 function TeamCreation () {
 
-  const [team, setTeam] = useState("");
+  const [teamString, setTeamString] = useState("");
+  const [fileName, setFileName] = useState("data.cfg");
+  const [download, setDownload]= useState("");
+  const [isFilled, setIsFilled] = useState(false);
   //const [allPlayers, setPlayers] = useState({});
  //  const test = value => (value ? undefined : 'RequiredTEST')
 // // // const mustBeNumber = value => (isNaN(value) ? 'Must be a number' : undefined)
@@ -15,10 +18,13 @@ function TeamCreation () {
 // // //   validators.reduce((error, validator) => error || validator(value), undefined)
 
   async function onSubmit () {
-
+ 
+    setFileName(JSON.parse(teamString).team.name + ".cfg");
+    setDownload("data:text/json;charset=utf-8," + encodeURIComponent(teamString));
+    console.log(download)
     
-
-    
+  // el.setAttribute("href", "data:"+data);
+  // el.setAttribute("download", "data.json");
   }
 
   function updateValues(data){
@@ -35,12 +41,15 @@ function TeamCreation () {
       tag: data.tag? data.tag : undefined,
       flag: data.flag? data.flag : undefined,
       logo: data.logo? data.logo: undefined
-      //players: Object.keys(players).length>0? {}: undefined
     }
     
     dataTeam.players = (Object.keys(players).length > 0) && Object.keys(players) != "undefined"? players : undefined;
-  
-    setTeam(JSON.stringify(dataTeam,0, 2));
+
+    let team = {};
+    team.team = dataTeam;
+    setTeamString(JSON.stringify(team,0, 2).slice(1,-1));
+    //setTeamString(JSON.stringify(team,0, 2));
+
   }
 
 
@@ -79,7 +88,10 @@ function TeamCreation () {
           if (!values.playerFive) {
             errors.playerFive = 'Required'
           }
-          updateValues(values);  
+          updateValues(values);
+          
+          (Object.keys(errors).length > 0) ? setIsFilled(false): setIsFilled(true);
+
           return errors
         }}
         render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -174,11 +186,14 @@ function TeamCreation () {
             )}
             </Field>
             </div>
-            <div >
-              <Button color='teal' type="submit">
-                  Submit
+            <div className="submitDiv">
+              <Button type="submit" color='teal' style={{padding:0, width: 6.5+"em", height:2.5+"em"}} onClick={onSubmit}  disabled={!isFilled}>
+                <a download={fileName} href={download}>
+                  Download
+                </a>
               </Button>
-                <Button primary
+                <Button 
+                primary
                   type="button"
                   onClick={form.reset}
                   disabled={submitting || pristine}
@@ -189,9 +204,9 @@ function TeamCreation () {
           </form>
         )}
       />
-      <Divider vertical className="aaa">To</Divider>
+      <Divider vertical >To</Divider>
 
-      <pre>{team}</pre>
+      <pre>{teamString}</pre>
     </div>
   );
 }
