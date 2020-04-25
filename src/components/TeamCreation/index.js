@@ -8,11 +8,11 @@ function TeamCreation() {
   const [fileName, setFileName] = useState("data.json");
   const [download, setDownload] = useState("");
   const [isFilled, setIsFilled] = useState(false);
-  const [teamFile, setTeamFile] = useState({});
+  const [initialValues, setinitialValues] = useState();
   useEffect(() => {
-    setTeamFile(teamFile);
-    console.log("useeeffect:!", teamFile);
-  }, [teamFile]);
+    console.log("azeaze: ", initialValues);
+  }, [initialValues]);
+
   //const [allPlayers, setPlayers] = useState({});
   //  const test = value => (value ? undefined : 'RequiredTEST')
   // // // const mustBeNumber = value => (isNaN(value) ? 'Must be a number' : undefined)
@@ -26,10 +26,6 @@ function TeamCreation() {
     setDownload(
       "data:text/json;charset=utf-8," + encodeURIComponent(teamString)
     );
-    console.log(download);
-
-    // el.setAttribute("href", "data:"+data);
-    // el.setAttribute("download", "data.json");
   }
 
   function handleImport(teamFile) {
@@ -39,7 +35,7 @@ function TeamCreation() {
       reader.onload = (evt) => {
         let resultText = evt.target.result;
         jsonFile = JSON.parse(resultText);
-        setTeamFile(jsonFile.team);
+        setinitialValues(jsonFile.team);
         resolve();
       }; //.bind(this);
       reader.readAsText(teamFile[0]);
@@ -98,6 +94,26 @@ function TeamCreation() {
   return (
     <div className="teamCreationContainer">
       <Form
+        initialValues={
+          initialValues && {
+            ...initialValues,
+            playerOne: Object.keys(initialValues.players)[0],
+            playerOneName:
+              initialValues.players[Object.keys(initialValues.players)[0]],
+            playerTwo: Object.keys(initialValues.players)[1],
+            playerTwoName:
+              initialValues.players[Object.keys(initialValues.players)[1]],
+            playerThree: Object.keys(initialValues.players)[2],
+            playerThreeName:
+              initialValues.players[Object.keys(initialValues.players)[2]],
+            playerFour: Object.keys(initialValues.players)[3],
+            playerFourName:
+              initialValues.players[Object.keys(initialValues.players)[3]],
+            playerFive: Object.keys(initialValues.players)[4],
+            playerFiveName:
+              initialValues.players[Object.keys(initialValues.players)[4]],
+          }
+        }
         onSubmit={onSubmit}
         validate={(values) => {
           const errors = {};
@@ -148,27 +164,7 @@ function TeamCreation() {
               type="file"
               placeholder="Import Team"
               onChange={(e) => {
-                handleImport(e.target.files).then(() => {
-                  console.log("values avant: ", values);
-                  // form.reset();
-                  console.log("test teamfile:  ", teamFile);
-                  console.log("test teamfileName:  ", teamFile.name);
-                  values.name = teamFile.name;
-                  values.tag = teamFile.tag;
-                  values.flag = teamFile.flag;
-                  values.logo = teamFile.logo;
-                  console.log("values apres: ", values);
-                  /*  values.playerOneName = Object.keys(teamFile.players)[0];
-                  values.playerOne = teamFile.players[0];
-                  values.playerTwoName = Object.keys(teamFile.players)[1];
-                  values.playerTwo = teamFile.players[1];
-                  values.playerThreeName = Object.keys(teamFile.players)[2];
-                  values.playerThree = teamFile.players[2];
-                  values.playerFourName = Object.keys(teamFile.players)[3];
-                  values.playerFour = teamFile.players[3];
-                  values.playerFiveName = Object.keys(teamFile.players)[4];
-                  values.playerFive = teamFile.players[4];*/
-                });
+                handleImport(e.target.files);
               }}
               accept=".json"
             />
