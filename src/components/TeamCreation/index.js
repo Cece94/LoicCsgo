@@ -9,9 +9,7 @@ function TeamCreation() {
   const [download, setDownload] = useState("");
   const [isFilled, setIsFilled] = useState(false);
   const [initialValues, setinitialValues] = useState();
-  useEffect(() => {
-    console.log("azeaze: ", initialValues);
-  }, [initialValues]);
+  useEffect(() => {}, [initialValues]);
 
   //const [allPlayers, setPlayers] = useState({});
   //  const test = value => (value ? undefined : 'RequiredTEST')
@@ -224,6 +222,10 @@ function TeamCreation() {
                 </div>
               )}
             </Field>
+            <h4 class="ui horizontal divider header">
+              <i aria-hidden="true" className="users icon"></i>
+              Team players
+            </h4>
             <div className="teamMembers">
               <div className="teamPlayer">
                 <Field name="playerOne">
